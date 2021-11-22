@@ -1,6 +1,8 @@
 export interface EventData {}
 
-export interface EventMetadata {}
+export interface EventMetadata {
+  correlationId: string;
+}
 
 export interface Event {
   id: string;
