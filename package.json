@@ -1,20 +1,27 @@
 {
   "name": "@di-proto/event-catalog",
-  "version": "1.0.0",
+  "version": "1.0.10",
   "description": "",
-  "main": "index.js",
+  "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "clean": "npx rimraf ./dist",
-    "build:ts": "npm run clean && tsc",
-    "build:schema": "./scripts/generate-schema.sh"
+    "build:docs": "npm run clean:docs && ./scripts/generate-docs.sh",
+    "build:schema": " ./scripts/generate-schema.sh",
+    "build:ts": "npm run clean:ts && tsc",
+    "clean:ts": "npx rimraf ./dist",
+    "clean:docs": "npx rimraf ./docs/**/*",
+    "prepare": "npm run build:schema && npm run build:ts && npm run build:docs",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "asciidoctor": "^2.2.5",
     "rimraf": "^3.0.2",
-    "ts-json-schema-generator": "^0.97.0"
+    "ts-json-schema-generator": "^0.97.0",
+    "typedoc": "^0.22.9",
+    "typescript-json-schema": "^0.52.0",
+    "wetzel": "^0.2.3"
   }
 }

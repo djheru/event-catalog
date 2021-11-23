@@ -1,12 +1,13 @@
 {
-  "$id": "@di-proto/event-catalog",
+  "$id": "di-proto/event-catalog",
   "$schema": "http://json-schema.org/draft-07/schema#",
   "definitions": {
-    "Event": {
+    "BaseEvent": {
+      "additionalProperties": false,
       "description": "Represents an event or command in the system",
       "properties": {
         "data": {
-          "$ref": "#/definitions/EventData",
+          "$ref": "#/definitions/BaseEventData",
           "description": "The data contained within the message as JSON"
         },
         "expectedVersion": {
@@ -20,7 +21,7 @@
           "type": "string"
         },
         "metadata": {
-          "$ref": "#/definitions/EventMetadata",
+          "$ref": "#/definitions/BaseEventMetadata",
           "description": "The metadata of the message as JSON"
         },
         "streamName": {
@@ -39,13 +40,17 @@
         "data",
         "metadata"
       ],
+      "title": "BaseEvent",
       "type": "object"
     },
-    "EventData": {
+    "BaseEventData": {
+      "additionalProperties": false,
       "description": "Represents the data associated with an event or command",
+      "title": "BaseEventData",
       "type": "object"
     },
-    "EventMetadata": {
+    "BaseEventMetadata": {
+      "additionalProperties": false,
       "description": "Represents the metadata associated with a command or event",
       "properties": {
         "correlationId": {
@@ -63,9 +68,12 @@
         "correlationId",
         "dateTime"
       ],
+      "title": "BaseEventMetadata",
       "type": "object"
     },
-    "UpdateAddress": {
+    "UpdateAddressCommand": {
+      "additionalProperties": false,
+      "description": "Represents an \"update-address\" command for usage by the event store",
       "properties": {
         "data": {
           "$ref": "#/definitions/UpdateAddressData",
@@ -102,9 +110,11 @@
         "streamName",
         "type"
       ],
+      "title": "UpdateAddress",
       "type": "object"
     },
     "UpdateAddressData": {
+      "additionalProperties": false,
       "description": "Represents a command to update an Account Address with the provided data",
       "properties": {
         "address1": {
@@ -150,9 +160,11 @@
         "state",
         "postalCode"
       ],
+      "title": "UpdateAddressData",
       "type": "object"
     },
     "UpdateAddressMetadata": {
+      "additionalProperties": false,
       "description": "Represents the metadata associated with the update-address command.",
       "properties": {
         "correlationId": {
@@ -176,6 +188,7 @@
         "dateTime",
         "userId"
       ],
+      "title": "UpdateAddressMetadata",
       "type": "object"
     }
   }

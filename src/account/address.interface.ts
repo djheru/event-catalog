@@ -1,9 +1,10 @@
-import { Event, EventData, EventMetadata } from '../common/event.interface';
+import { BaseEvent, BaseEventData, BaseEventMetadata } from '../common/event.interface';
 
 /**
  * Represents a command to update an Account Address with the provided data
+ * @title UpdateAddressData
  */
-export interface UpdateAddressData extends EventData {
+export interface UpdateAddressData extends BaseEventData {
   /**
    * The first line of the street address
    * @minLength 2
@@ -49,8 +50,9 @@ export interface UpdateAddressData extends EventData {
 
 /**
  * Represents the metadata associated with the update-address command.
+ * @title UpdateAddressMetadata
  */
-export interface UpdateAddressMetadata extends EventMetadata {
+export interface UpdateAddressMetadata extends BaseEventMetadata {
   /**
    * The UUID v4 for the user or other entity submitting this command
    * @pattern /^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i
@@ -58,7 +60,11 @@ export interface UpdateAddressMetadata extends EventMetadata {
   userId: string;
 }
 
-export interface UpdateAddress extends Event {
+/**
+ * Represents an "update-address" command for usage by the event store
+ * @title UpdateAddress
+ */
+export interface UpdateAddressCommand extends BaseEvent {
   /**
    * The type is defined as a static value, "update-address"
    */

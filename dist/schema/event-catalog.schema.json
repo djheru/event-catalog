@@ -1,0 +1,195 @@
+{
+    "$id": "di-proto/event-catalog",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "definitions": {
+        "BaseEvent": {
+            "additionalProperties": false,
+            "description": "Represents an event or command in the system",
+            "properties": {
+                "data": {
+                    "$ref": "#/definitions/BaseEventData",
+                    "description": "The data contained within the message as JSON"
+                },
+                "expectedVersion": {
+                    "description": "The expected version of the stream when the message is to be written",
+                    "minimum": 0,
+                    "type": "number"
+                },
+                "id": {
+                    "description": "The UUID v4 for the event",
+                    "pattern": "/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i",
+                    "type": "string"
+                },
+                "metadata": {
+                    "$ref": "#/definitions/BaseEventMetadata",
+                    "description": "The metadata of the message as JSON"
+                },
+                "streamName": {
+                    "description": "Name of the event stream",
+                    "type": "string"
+                },
+                "type": {
+                    "description": "The type of the message",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "id",
+                "streamName",
+                "type",
+                "data",
+                "metadata"
+            ],
+            "title": "BaseEvent",
+            "type": "object"
+        },
+        "BaseEventData": {
+            "additionalProperties": false,
+            "description": "Represents the data associated with an event or command",
+            "title": "BaseEventData",
+            "type": "object"
+        },
+        "BaseEventMetadata": {
+            "additionalProperties": false,
+            "description": "Represents the metadata associated with a command or event",
+            "properties": {
+                "correlationId": {
+                    "description": "A UUID v4 to trace a single event throughout its entire journey",
+                    "pattern": "/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i",
+                    "type": "string"
+                },
+                "dateTime": {
+                    "description": "The date/time that this event was created in its originating system",
+                    "format": "date-time",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "correlationId",
+                "dateTime"
+            ],
+            "title": "BaseEventMetadata",
+            "type": "object"
+        },
+        "UpdateAddressCommand": {
+            "additionalProperties": false,
+            "description": "Represents an \"update-address\" command for usage by the event store",
+            "properties": {
+                "data": {
+                    "$ref": "#/definitions/UpdateAddressData",
+                    "description": "The data payload for the command"
+                },
+                "expectedVersion": {
+                    "description": "The expected version of the stream when the message is to be written",
+                    "minimum": 0,
+                    "type": "number"
+                },
+                "id": {
+                    "description": "The UUID v4 for the event",
+                    "pattern": "/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i",
+                    "type": "string"
+                },
+                "metadata": {
+                    "$ref": "#/definitions/UpdateAddressMetadata",
+                    "description": "The metadata associated with the command"
+                },
+                "streamName": {
+                    "description": "Name of the event stream",
+                    "type": "string"
+                },
+                "type": {
+                    "const": "update-address",
+                    "description": "The type is defined as a static value, \"update-address\"",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "data",
+                "id",
+                "metadata",
+                "streamName",
+                "type"
+            ],
+            "title": "UpdateAddress",
+            "type": "object"
+        },
+        "UpdateAddressData": {
+            "additionalProperties": false,
+            "description": "Represents a command to update an Account Address with the provided data",
+            "properties": {
+                "address1": {
+                    "description": "The first line of the street address",
+                    "maxLength": 128,
+                    "minLength": 2,
+                    "type": "string"
+                },
+                "address2": {
+                    "description": "The second line of the street address",
+                    "maxLength": 128,
+                    "minLength": 0,
+                    "type": "string"
+                },
+                "city": {
+                    "description": "The municipality of the address",
+                    "maxLength": 128,
+                    "minLength": 1,
+                    "type": "string"
+                },
+                "postalCode": {
+                    "description": "The postal code of the adddress",
+                    "maxLength": 5,
+                    "minLength": 5,
+                    "type": "string"
+                },
+                "postalCodePlus4": {
+                    "description": "The extended postal code of the adddress",
+                    "maxLength": 4,
+                    "minLength": 4,
+                    "type": "string"
+                },
+                "state": {
+                    "description": "The state or province of the address",
+                    "maxLength": 64,
+                    "minLength": 2,
+                    "type": "string"
+                }
+            },
+            "required": [
+                "address1",
+                "city",
+                "state",
+                "postalCode"
+            ],
+            "title": "UpdateAddressData",
+            "type": "object"
+        },
+        "UpdateAddressMetadata": {
+            "additionalProperties": false,
+            "description": "Represents the metadata associated with the update-address command.",
+            "properties": {
+                "correlationId": {
+                    "description": "A UUID v4 to trace a single event throughout its entire journey",
+                    "pattern": "/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i",
+                    "type": "string"
+                },
+                "dateTime": {
+                    "description": "The date/time that this event was created in its originating system",
+                    "format": "date-time",
+                    "type": "string"
+                },
+                "userId": {
+                    "description": "The UUID v4 for the user or other entity submitting this command",
+                    "pattern": "/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "correlationId",
+                "dateTime",
+                "userId"
+            ],
+            "title": "UpdateAddressMetadata",
+            "type": "object"
+        }
+    }
+}

@@ -1,11 +1,14 @@
 /**
  * Represents the data associated with an event or command
+ * @title BaseEventData
  */
-export interface EventData {}
+export interface BaseEventData {}
 
 /**
  * Represents the metadata associated with a command or event
- */ export interface EventMetadata {
+ * @title BaseEventMetadata
+ */
+export interface BaseEventMetadata {
   /**
    * A UUID v4 to trace a single event throughout its entire journey
    * @pattern /^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i
@@ -19,8 +22,9 @@ export interface EventData {}
 
 /**
  * Represents an event or command in the system
+ * @title BaseEvent
  */
-export interface Event {
+export interface BaseEvent {
   /**
    * The UUID v4 for the event
    * @pattern /^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i
@@ -40,12 +44,12 @@ export interface Event {
   /**
    * The data contained within the message as JSON
    */
-  data: EventData;
+  data: BaseEventData;
 
   /**
    * The metadata of the message as JSON
    */
-  metadata: EventMetadata;
+  metadata: BaseEventMetadata;
 
   /**
    * The expected version of the stream when the message is to be written
