@@ -1,8 +1,82 @@
 <!DOCTYPE html><html class="default"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>Events Catalog - v1.0.10</title><meta name="description" content="Documentation for Events Catalog - v1.0.10"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="assets/style.css"/><link rel="stylesheet" href="assets/highlight.css"/><script async src="assets/search.js" id="search-script"></script></head><body><script>document.body.classList.add(localStorage.getItem("tsd-theme") || "os")</script><header><div class="tsd-page-toolbar"><div class="container"><div class="table-wrap"><div class="table-cell" id="tsd-search" data-base="."><div class="field"><label for="tsd-search-field" class="tsd-widget search no-caption">Search</label><input type="text" id="tsd-search-field"/></div><ul class="results"><li class="state loading">Preparing search index...</li><li class="state failure">The search index is not available</li></ul><a href="index.html" class="title">Events Catalog - v1.0.10</a></div><div class="table-cell" id="tsd-widgets"><div id="tsd-filter"><a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a><div class="tsd-filter-group"><div class="tsd-select" id="tsd-filter-visibility"><span class="tsd-select-label">All</span><ul class="tsd-select-list"><li data-value="public">Public</li><li data-value="protected">Public/Protected</li><li data-value="private" class="selected">All</li></ul></div> <input type="checkbox" id="tsd-filter-inherited" checked/><label class="tsd-widget" for="tsd-filter-inherited">Inherited</label><input type="checkbox" id="tsd-filter-externals" checked/><label class="tsd-widget" for="tsd-filter-externals">Externals</label></div></div><a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a></div></div></div></div><div class="tsd-page-title"><div class="container"><h1>Events Catalog - v1.0.10</h1></div></div></header><div class="container container-main"><div class="row"><div class="col-8 col-content"><div class="tsd-panel tsd-typography">
-<a href="#event-catalog" id="event-catalog" style="color: inherit; text-decoration: none;">
-  <h1>event-catalog</h1>
+<a href="#di-protoevent-catalog" id="di-protoevent-catalog" style="color: inherit; text-decoration: none;">
+  <h1>@di-proto/event-catalog</h1>
 </a>
-<p>Generate JSON Schema:</p>
-<pre><code><span class="hl-0">npx</span><span class="hl-1"> </span><span class="hl-0">typescript</span><span class="hl-1">-</span><span class="hl-0">json</span><span class="hl-1">-</span><span class="hl-0">schema</span><span class="hl-1"> \</span><br/><span class="hl-1">  --</span><span class="hl-0">refs</span><span class="hl-1"> </span><span class="hl-2">true</span><span class="hl-1"> \</span><br/><span class="hl-1">  --</span><span class="hl-0">aliasRefs</span><span class="hl-1"> </span><span class="hl-2">true</span><span class="hl-1"> \</span><br/><span class="hl-1">  --</span><span class="hl-0">titles</span><span class="hl-1"> </span><span class="hl-2">true</span><span class="hl-1"> \</span><br/><span class="hl-1">  --</span><span class="hl-0">defaultProps</span><span class="hl-1"> </span><span class="hl-2">true</span><span class="hl-1"> \</span><br/><span class="hl-1">  --</span><span class="hl-0">required</span><span class="hl-1"> </span><span class="hl-2">true</span><span class="hl-1"> \</span><br/><span class="hl-1">  --</span><span class="hl-0">tsNodeRegister</span><span class="hl-1"> </span><span class="hl-2">true</span><span class="hl-1"> \</span><br/><span class="hl-1">  </span><span class="hl-3">&quot;./src/**/*.ts&quot;</span><span class="hl-1"> </span><span class="hl-3">&quot;*&quot;</span>
+<p>A prototype for a DI catalog to support publishing of event schema for use by Event Sourcing system participants</p>
+
+<a href="#designing-events" id="designing-events" style="color: inherit; text-decoration: none;">
+  <h2>Designing events</h2>
+</a>
+<ul>
+<li>Events and commands are defined as Typescript interfaces</li>
+<li>An event is composed conceptually of three types<ul>
+<li>The event/command itself</li>
+<li>The data payload</li>
+<li>The metadata payload</li>
+</ul>
+</li>
+<li>The interfaces are divided into business domains (e.g. Account) </li>
+<li>Each domain consists of subdomains (e.g. Address)</li>
+<li>The structure of this prototypes provides namespacing</li>
+</ul>
+<pre><code class="language-typescript"><span class="hl-0">// Example client code</span><br/><span class="hl-1">import</span><span class="hl-2"> { </span><span class="hl-3">Account</span><span class="hl-2"> } </span><span class="hl-1">from</span><span class="hl-2"> </span><span class="hl-4">&#39;@di-proto/event-catalog&#39;</span><span class="hl-2">;</span><br/><span class="hl-5">const</span><span class="hl-2"> </span><span class="hl-6">updateAddressData</span><span class="hl-2">: </span><span class="hl-7">Account</span><span class="hl-2">.</span><span class="hl-7">Address</span><span class="hl-2">.</span><span class="hl-7">UpdateAddressData</span><span class="hl-2"> = {</span><br/><span class="hl-2">  </span><span class="hl-3">address1:</span><span class="hl-2"> </span><span class="hl-4">&#39;111 main st&#39;</span><span class="hl-2">,</span><br/><span class="hl-2">  </span><span class="hl-3">address2:</span><span class="hl-2"> </span><span class="hl-4">&#39;Box 123&#39;</span><span class="hl-2">,</span><br/><span class="hl-2">  </span><span class="hl-3">city:</span><span class="hl-2"> </span><span class="hl-4">&#39;Springfield&#39;</span><span class="hl-2">,</span><br/><span class="hl-2">  </span><span class="hl-3">state:</span><span class="hl-2"> </span><span class="hl-4">&#39;IL&#39;</span><span class="hl-2">,</span><br/><span class="hl-2">  </span><span class="hl-3">postalCode:</span><span class="hl-2"> </span><span class="hl-4">&#39;11122&#39;</span><span class="hl-2">,</span><br/><span class="hl-2">  </span><span class="hl-3">postalCodePlus4:</span><span class="hl-2"> </span><span class="hl-4">&#39;8888&#39;</span><br/><span class="hl-2">};</span><br/><br/><span class="hl-0">// - OR -</span><br/><span class="hl-1">import</span><span class="hl-2"> { </span><span class="hl-3">Address</span><span class="hl-2"> } </span><span class="hl-1">from</span><span class="hl-2"> </span><span class="hl-4">&#39;@di-proto/event-catalog/dist/account&#39;</span><span class="hl-2">;</span><br/><span class="hl-5">const</span><span class="hl-2"> </span><span class="hl-6">updateAddressData</span><span class="hl-2">: </span><span class="hl-7">Address</span><span class="hl-2">.</span><span class="hl-7">UpdateAddressData</span><span class="hl-2"> = { ... };</span><br/><br/><span class="hl-0">// - OR -</span><br/><span class="hl-1">import</span><span class="hl-2"> { </span><span class="hl-3">UpdateAddressData</span><span class="hl-2"> } </span><span class="hl-1">from</span><span class="hl-2"> </span><span class="hl-4">&#39;@di-proto/event-catalog/dist/account/address.interface&#39;</span><span class="hl-2">;</span><br/><span class="hl-5">const</span><span class="hl-2"> </span><span class="hl-6">updateAddressData</span><span class="hl-2">: </span><span class="hl-7">UpdateAddressData</span><span class="hl-2"> = { ... };</span>
 </code></pre>
+
+<a href="#creating-documentation-artifacts" id="creating-documentation-artifacts" style="color: inherit; text-decoration: none;">
+  <h2>Creating Documentation Artifacts</h2>
+</a>
+<ul>
+<li>The prototype has a script <code>generate-docs.sh</code> to build documentation from the Typescript interfaces</li>
+<li>The script uses the npm package <code>typedoc</code> (<a href="https://www.npmjs.com/package/typedoc">https://www.npmjs.com/package/typedoc</a>)</li>
+<li>The script can be invoked with <code>npm run build:docs</code></li>
+<li>The documentation lives in the ./docs folder</li>
+<li>This HTML documentation is published to GitHub pages (<a href="https://djheru.github.io/event-catalog/index.html">https://djheru.github.io/event-catalog/index.html</a>)</li>
+</ul>
+
+<a href="#creating-a-json-schema-specification" id="creating-a-json-schema-specification" style="color: inherit; text-decoration: none;">
+  <h2>Creating a JSON Schema Specification</h2>
+</a>
+<ul>
+<li>The prototype has a script <code>generate-schema.sh</code> to build a JSON Schema file from the Typescript interfaces</li>
+<li>The script uses the npm package <code>ts-json-schema-generator</code> (<a href="https://www.npmjs.com/package/ts-json-schema-generator">https://www.npmjs.com/package/ts-json-schema-generator</a>)</li>
+<li>The script can be invoked with <code>npm run build:schema</code></li>
+<li>The schema lives in the ./src/schema folder</li>
+<li>The JSON Schema itself is exported so that it can be consumed by client code</li>
+</ul>
+
+<a href="#publishing-the-events-for-participants" id="publishing-the-events-for-participants" style="color: inherit; text-decoration: none;">
+  <h2>Publishing the Events for Participants</h2>
+</a>
+<ul>
+<li>Currently, the code is simply installed by npm directly from the GitHub repo</li>
+<li>This seems sufficient for me, but we may want to explore other options<ul>
+<li>Publishing to NPM registry</li>
+<li>Publishing to GitHub registry</li>
+<li>Providing an API that returns the JSON schema document itself</li>
+</ul>
+</li>
+</ul>
+
+<a href="#validation-of-event-objects" id="validation-of-event-objects" style="color: inherit; text-decoration: none;">
+  <h2>Validation of Event Objects</h2>
+</a>
+<ul>
+<li>Maintaining the JSON Schema allows us to use auto-generated validation</li>
+<li>The <code>evented-app</code> repo contains an example of using the AJV library (<a href="https://www.npmjs.com/package/ajv">https://www.npmjs.com/package/ajv</a>) to handle this </li>
+<li>This allows the client code to validate events against the JSON Schema for correctness</li>
+<li>Includes more robust validation parameters than plain Typescript<ul>
+<li>Number min/max values</li>
+<li>String min/max length</li>
+<li>Regex pattern matching</li>
+</ul>
+</li>
+</ul>
+
+<a href="#potential-enhancements" id="potential-enhancements" style="color: inherit; text-decoration: none;">
+  <h2>Potential Enhancements</h2>
+</a>
+<ul>
+<li>Add Husky (<a href="https://www.npmjs.com/package/husky">https://www.npmjs.com/package/husky</a>) git hooks to run <code>npm run prepare</code> script to automatically generate docs/schema</li>
+<li>Provide validation methods already baked in, so that client code doesn&#39;t have to build them with AJV</li>
+</ul>
 </div></div><div class="col-4 col-menu menu-sticky-wrap menu-highlight"><nav class="tsd-navigation primary"><ul><li class="current"><a href="modules.html">Exports</a></li><li class=" tsd-kind-namespace"><a href="modules/Account.html">Account</a></li><li class=" tsd-kind-namespace"><a href="modules/Common.html">Common</a></li><li class=" tsd-kind-namespace"><a href="modules/Schema.html">Schema</a></li></ul></nav><nav class="tsd-navigation secondary menu-sticky"><ul></ul></nav></div></div></div><footer class="with-border-bottom"><div class="container"><h2>Settings</h2><p>Theme <select id="theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></p></div></footer><div class="container tsd-generator"><p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></div><div class="overlay"></div><script src="assets/main.js"></script></body></html>
